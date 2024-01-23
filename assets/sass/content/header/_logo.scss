@@ -1,0 +1,24 @@
+.logo {
+  max-width: 16rem;
+
+  @include media("md") {
+    margin: 5px 5px 5px 0px;
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  img {
+    width: 80px;
+    height: auto;
+    object-fit: contain;
+
+    @media screen and (max-width: 768px) {
+      width: 65px;
+      margin-left: 25px;
+    }
+  }
+}

@@ -1,0 +1,62 @@
+@import "../base/mixins";
+
+@import "../content/home/seo";
+@import "../content/home/grid_products";
+@import "../content/home/categories";
+@import "../content/home/hightlights";
+@import "../content/home/instagram";
+@import "../content/home/post_blog";
+
+
+.section.fullbanner.-mobile.-principal {
+  @media screen and (max-width: 768px) {
+    margin-bottom: 20px;
+  }
+  .swiper.swiper-initialized.swiper-horizontal.swiper-ios {
+    @media screen and (max-width: 768px) {
+      max-height: 420px;
+    }
+    .swiper-wrapper {
+      .swiper-lazy.swiper-lazy-loaded {
+        @media screen and (max-width: 768px) {
+          height: auto;
+        }
+      } 
+    }
+  }
+
+  .swiper-wrapper {
+    .image {
+      .swiper-lazy.swiper-lazy-loaded {
+        height: fit-content;
+        object-fit: contain !important;
+      }
+
+      &::after {
+        padding-bottom: 110% !important;
+      }
+    } 
+  }
+}
+
+.page-home {
+  .section.container.container-icons-page-home {
+    @media screen and (max-width: 768px) {
+      padding-right: 0;
+    }
+    .icons {
+      @media screen and (max-width: 768px) {
+        padding-right: 20px;
+      }
+
+      .item {
+        @media screen and (max-width: 768px) {
+          min-width: 250px;
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+

@@ -1,0 +1,86 @@
+@import "../base/mixins";
+
+@import "../content/header/top_bar";
+@import "../content/header/desktop";
+@import "../content/header/mobile";
+
+#header {
+  background-color: var(--white);
+  position: sticky;
+  top: 0;
+  transition: var(--transition);
+  width: 100%;
+  z-index: 20;
+
+  .scroll-up {
+    transition: 0.8s;
+  }
+
+  .scroll-down {
+    transition: 0.8s;
+  }
+
+  .search {
+    max-width: 730px;
+    width: 100%;
+
+    .field {
+      width: 100%;
+
+      input {
+        width: 98% !important;
+
+        @media screen and (max-width: 768px) {
+          width: 98% !important;
+        }
+      }
+    }
+  }
+    
+  &:not(.on-top) {
+    .content {
+      position: relative;
+    }
+
+    .search {
+      display: none;
+    }
+
+    .menu {
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  > .content {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+
+    @include media("md") {
+      justify-content: space-between;
+    }
+
+    .hamburger-logo {
+      display: flex;
+      width: 85%;
+
+      @include media("md") {
+        width: 15%;
+
+        .hamburger {
+          display: none;
+        }
+      }
+
+      @media screen and (max-width: 768px) {
+        margin: 5px 0px;
+      }
+    }
+
+    @import "../content/header/logo";
+    @import "../content/header/search";
+    @import "../content/header/actions";
+  }
+}

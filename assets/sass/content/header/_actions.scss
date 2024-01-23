@@ -1,0 +1,57 @@
+.actions {
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+  width: 15%;
+  position: relative;
+
+  > .button-locals {
+    display: flex;
+    cursor: pointer;
+    font-size: 1.2rem;
+    margin-right: 15px;
+    position: absolute;
+    left: -20px;
+    svg{
+      margin-top: -3px;
+      margin-left: 3px;
+    }
+
+    @media screen and (max-width: 768px) {
+      position: unset;
+      font-size: 1rem;
+      margin-right: 10px;
+      svg{
+        width: 26px;
+        height: 26px;
+        margin-top: 0;
+      }
+    }
+  }
+
+  > .account {
+    padding-right: 1rem;
+  }
+
+  > .cart .btn-cart {
+    position: relative;
+    transition: opacity 0.1s;
+    &.-loading { opacity: 0.4 }
+  }
+
+  > .cart .btn-cart .count {
+    align-items: center;
+    background-color: var(--highlight-2);
+    border-radius: 50%;
+    color: var(--white);
+    display: flex;
+    font-size: 12px;
+    height: 16px;
+    line-height: 1;
+    justify-content: center;
+    position: absolute;
+    right: -10px;
+    top: -10px;
+    width: 16px;
+  }
+}

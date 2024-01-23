@@ -1,0 +1,38 @@
+{% if product.discount_rule != null and product.discount_rule.type == 'percentage' %}
+  {% assign discount_amount = product.discount_rule.amount %}
+{% endif %}
+
+<div class="product-name-price" data-name-price>
+  <div class="name-reference">
+    <p class="reference">SKU: {{ product.reference }}</p>
+    <h1 class="name">{{ product.name }}</h1>
+    <h1 class="product-price">{{ product.price }}</h1>
+  </div>
+
+  {% capture price_settings %}
+    {
+    "productId": {{ product.id }},
+    "showInstallmentsWithoutInterest": true,
+    "showInstallmentsWithInterest": false, 
+    "htmlTag": "h2"
+    }
+  {% endcapture %}
+
+  {% if logged_in %}
+    <div class="price-wrapper">
+      <div
+        class="product-price"
+        data-main-product-price
+        data-was-processed="false"
+        data-sku=""
+        data-init-price='{{ price_settings }}'
+        data-price="{{ product.price }}"
+        data-discount-percent="{{ discount_amount | default: 0 }}"
+      ></div>
+    </div>
+  {% else %}
+    <div class="price-wrapper">
+      <a href="/entrar" class="price_value not_logged_in">Faça login para comprar</a>
+    </div>
+  {% endif %}  
+</div>

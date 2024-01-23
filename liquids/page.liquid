@@ -1,0 +1,28 @@
+{% head %}
+  {% opengraphfor page %}
+  <link
+    href="pages/page_above.css"
+    inline
+    rel="stylesheet"
+    type="text/css">
+{% endhead %}
+
+{% body %}
+  <script src="{{ 'pages.js' | javascript_path }}"></script>
+{% endbody %}
+
+
+{% if page.slug == 'onde-encontrar' %}
+  {% render "partials/pages/stores", page: page %}
+{% elsif page.slug == 'fale-conosco' %}
+  {% render "partials/pages/contact", page: page, current_shop: current_shop %}
+  {% elsif page.slug == 'entre-em-contato-conosco' %}
+    {% render "partials/pages/contact", page: page, current_shop: current_shop %}
+{% elsif page.slug == 'perguntas-frequentes' %}
+  {% render "partials/pages/faq", page: page %}
+{% elsif page.slug == 'aplicacoes' %}
+  {% render "partials/content/home/posts_blog", page: page %}
+{% else %}
+  {% render "partials/pages/custom", page: page, current_shop: current_shop %}
+{% endif %}
+

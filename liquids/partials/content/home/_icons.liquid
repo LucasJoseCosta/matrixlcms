@@ -1,0 +1,25 @@
+{% load_banners position: position limit: 4 %}
+
+{% if loaded_banners.size > 0 %}
+  <section class="section container container-icons-page-home">
+    <div class="icons">
+      {% for banner in loaded_banners %}
+        <div class="item">
+          <figure class="image-icon">
+            <img
+            class="lazy"
+              src="{{ banner.file_url }}"
+              alt="{{ banner.title }}" />
+          {% comment %} <div class="skeleton"></div> {% endcomment %}
+          </figure>
+
+          <div class="text">
+            {% if banner.subtitle != blank %}
+              <p>{{ banner.subtitle }}</p>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+{% endif %}

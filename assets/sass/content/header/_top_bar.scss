@@ -1,0 +1,57 @@
+.top-bar {
+  background: var(--bg-top-bar, #312f4f);
+  height: 2.8rem;
+  text-align: center;
+  padding: 0.5rem 5%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: relative;
+
+  a,
+  p {
+    color: var(--white);
+    font-size: var(--font-size-small);
+  }
+
+  > .close {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    color: var(--white);
+    font-size: 1.6rem;
+    right: 5%;
+  }
+}
+
+.whatsapp-icon {
+  position: fixed;
+  background-image: url('../../../images/whatsapp_icon.png?sh=www.matrixlcms.com.br');
+  background-repeat: no-repeat;
+  background-size: 60px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  bottom: 25px;
+  right: 25px;
+  z-index: 10;
+  box-shadow: 1px 1px 4px 2px rgba(0,0,0,0.2);
+  transition: .2s;
+
+  &:hover {
+    opacity: .9;
+    transition: .2s;
+  }
+
+  @media screen and (max-width: 768px) {
+    background-size: 55px;
+    width: 55px;
+    height: 55px;
+    bottom: 15px;
+    right: 15px;
+  }
+}

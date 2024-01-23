@@ -1,0 +1,62 @@
+.icons {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  @media screen and (max-width: 768px) {
+    flex-direction: row;
+    overflow-x: scroll;
+    gap: 10px;
+  }
+
+  .item {
+    align-items: center;
+    display: flex;
+    flex: 1;
+    margin-bottom: 2rem;
+
+    @include media("sm") {
+      margin-bottom: 0;
+      margin-right: 4rem;
+    }
+
+    @media screen and (max-width: 768px) {
+      justify-content: space-between;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    .image-icon {
+      height: 115px;
+      width: 40%;
+      margin-right: 10px;
+      position: relative;
+
+      @media screen and (max-width: 768px) {
+        height: 90px;
+        width: fit-content;
+        margin-right: 0px;
+      }
+
+      img {
+        height: 100%;
+        width: 100%;
+        opacity: 1;
+      }
+    }
+
+    .text {
+      width: 70%;
+
+      @media screen and (max-width: 768px) {
+        width: 60% !important;
+      }
+    }
+  }
+
+  @include media("sm") {
+    flex-direction: row;
+  }
+}

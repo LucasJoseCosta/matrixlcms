@@ -1,0 +1,33 @@
+{
+  "name": "matrixlcms",
+  "repository": "gitlab:vnda/templates/template5",
+  "version": "2.0.0",
+  "bugs": {
+    "url": "https://gitlab.com/vnda/templates/template5/-/issues"
+  },
+  "config": {
+    "liquid": "4.0.3",
+    "url": "https://matrixlcms.com.br",
+    "nameprod": "www.matrixlcms.com.br",
+    "debug": "true"
+  },
+  "scripts": {
+    "dev": "node scripts/dev",
+    "sync": "node scripts/sync",
+    "deploy": "node scripts/deploy"
+  },
+  "author": "Vnda - Tecnologia em Ecommerce",
+  "license": "MIT",
+  "devDependencies": {
+    "dotenv": "^16.3.1",
+    "gulp": "^4.0.2",
+    "gulp-environments": "^1.0.1",
+    "jquery": "^3.6.0",
+    "mmenu-light": "^3.1.1",
+    "prettier": "^2.5.1",
+    "run-script-os": "^1.0.7",
+    "swiper": "^7.3.1",
+    "vanilla-lazyload": "^12.4.0",
+    "vue": "^2.6.12"
+  }
+}

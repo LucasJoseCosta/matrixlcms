@@ -1,0 +1,92 @@
+@import "../base/mixins";
+
+.product-block {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: var(--transition);
+  width: 100%;
+  justify-content: space-between;
+
+  &:hover .images figure img:nth-child(2) {
+    opacity: 1;
+  }
+
+  &.sold-out {
+    position: relative;
+    z-index: 1;
+    opacity: 0.5;
+  }
+
+  > .images {
+    margin-bottom: 1rem;
+    position: relative;
+
+    a {
+      .flag {
+        font-size: 0.75em;
+        padding: 5px 10px;
+      }
+    }
+  }
+
+  > .images figure {
+    transition: var(--transition);
+
+    img:nth-child(2) {
+      opacity: 0;
+    }
+  }
+
+  > .description .quantity {
+    font-size: var(--font-size-small);
+    margin-top: 1rem;
+    color: #bdbdbd;
+  }
+
+  > .description .name {
+    transition: var(--transition);
+  }
+
+  > .description .name a {
+    font-size: 0.85em;
+    color: #3c3c3c;
+  }
+
+  > .description .price-wrapper .product-price .cmp-price-container .cmp-price-price {
+    color: #3c3c3c;
+  }
+
+  > .button-default {
+    margin-top: 1.5rem;
+    width: 100%;
+    background-color: #003e62 !important;
+    color: #fff !important;
+
+    &:hover {
+      background-color: #fff !important;
+      color: #003e62 !important;
+    }
+  }
+
+  > .add-to-cart {
+    display: none;
+  }
+
+  // .images a .-square img {
+  //   opacity: 1;
+  // }
+
+  .price_value.not_logged_in {
+    text-decoration: underline;
+    color: #003e62 !important;
+    text-decoration-color: #003e62 !important;
+  }
+
+  @import "./flag";
+  @import "./price";
+}
+
+.hidden {
+  display: none;
+}

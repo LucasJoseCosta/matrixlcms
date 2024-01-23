@@ -1,0 +1,14 @@
+{% head %}
+  <link
+    href="/pages/institucional/about.css"
+    inline
+    rel="stylesheet"
+    type="text/css">
+{% endhead %}
+
+{% assign position_primary_text = page.slug | append: '-banner-conteudo' %}
+{% assign position_secondary_text = page.slug | append: '-banner-conteudo-secundario' %}
+
+<div class="page-about-wrapper">
+  {% render 'partials/pages/components/content', page: page, position: position_primary_text %}
+</div>

@@ -1,0 +1,27 @@
+@import "../base/mixins";
+@import "../content/product/banner";
+@import "../content/product/group_shop";
+@import "../components/carousel";
+
+.mz-zoom-window {
+  z-index: 0 !important;
+}
+
+.page-product {
+  .msg-error {
+    display: none;
+  }
+
+  .product-block.-group-shop-block {
+    .attributes {
+      gap: 1rem !important;
+      margin-top: 0 !important;
+    }
+  }
+
+  .price_value.not_logged_in {
+    text-decoration: underline;
+    color: #003e62 !important;
+    text-decoration-color: #003e62!important;
+  }
+}

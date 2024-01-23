@@ -1,0 +1,161 @@
+{% head %}
+  <link
+    href=""
+    inline
+    rel="stylesheet"
+    type="text/css">
+{% endhead %}
+
+<div class="blog-title-wrapper">
+  <h1 class="blog-title">Aplicações</h1>
+</div>
+<div class="section container section-blog-wrapper">
+  <div class="loader"></div>
+  <div class="blog-posts-wrapper"></div>
+</div>
+
+
+<script>
+  fetch("https://matrixlcms.com.br/feed")
+    .then(response => response.text())
+    .then(xmlString => {
+      // Parse o XML em um objeto DOM
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(xmlString, "text/xml");
+
+      // Chame a função xml2json com o documento XML
+      const jsonData = xml2json(xmlDoc);
+      feedPostCompononent(jsonData);
+    })
+    .catch(error => console.log(error))
+    .finally(() => {
+      const loader = document.querySelector('.loader');
+      loader.style.display = "none";
+    });
+
+  function xml2json(xml) {
+    var obj = {};
+
+    if (xml.nodeType == 1) { // Elemento
+      // Processa os atributos do elemento
+      if (xml.attributes.length > 0) {
+        obj["@attributes"] = {};
+        for (var j = 0; j < xml.attributes.length; j++) {
+          var attribute = xml.attributes.item(j);
+          obj["@attributes"][attribute.nodeName] = attribute.nodeValue;
+        }
+      }
+
+      if (xml.nodeName === 'item') {
+        // Encontre o elemento que contém a URL da imagem e mapeie-o para 'media:content' no JSON
+        const mediaContentNode = xml.getElementsByTagNameNS('*', 'content');
+        if(mediaContentNode) {
+          obj['urlImgPrincipal'] = mediaContentNode[0].attributes[3].nodeValue;
+        }
+
+        // Encontre o elemento 'description' e mapeie-o para 'description' no JSON
+        const descriptionNode = xml.querySelector('description');
+        if (descriptionNode) {
+          obj['description'] = descriptionNode.textContent;
+        }
+
+        // Encontre o elemento que contém a URL da imagem e mapeie-o para 'content:encoded' no JSON
+        const contentEncodedNode = xml.getElementsByTagNameNS('*','encoded');
+        if (contentEncodedNode) {
+          obj['textContent'] = contentEncodedNode[0].textContent;
+        }
+       
+      }
+    } else if (xml.nodeType == 3) {
+      obj = xml.nodeValue;
+    }
+
+    // Processa os filhos do elemento (nos filhos)
+    if (xml.hasChildNodes()) {
+      for (var i = 0; i < xml.childNodes.length; i++) {
+        var item = xml.childNodes.item(i);
+        var nodeName = item.nodeName;
+
+        if (typeof(obj[nodeName]) == "undefined") {
+          obj[nodeName] = xml2json(item);
+        } else {
+          if (typeof(obj[nodeName].push) == "undefined") {
+            var old = obj[nodeName];
+            obj[nodeName] = [];
+            obj[nodeName].push(old);
+          }
+          obj[nodeName].push(xml2json(item));
+        }
+      }
+    }
+    return obj;
+  }
+
+  function feedPostCompononent(jsonData){
+    console.log(jsonData.rss.channel.item);
+    const postArray = jsonData.rss.channel.item;
+
+    for(let i = 0; i < postArray.length; i++){
+      let postItem = jsonData.rss.channel.item[i];
+
+      //console.log(postItem);
+      
+      // Seleciona container dos posts
+      const blogPostWrapper = document.querySelector(".section-blog-wrapper .blog-posts-wrapper");
+      //console.log(blogPostWrapper)
+
+      // Wrapper do conteudo do post
+      let divPostWrapper = document.createElement("div");
+      divPostWrapper.classList.add("post-wrapper");
+
+      // Wrapper de imagem do post
+      let divPostImgWrapper = document.createElement("div");
+      divPostImgWrapper.classList.add("post-img-wrapper");
+      divPostWrapper.appendChild(divPostImgWrapper)
+
+      // Elemento img 
+      let imgPostElement = document.createElement("img");
+      imgPostElement.classList.add("img-post");
+      imgPostElement.src = postItem.urlImgPrincipal;
+      divPostImgWrapper.appendChild(imgPostElement);
+
+      // Wrapper de titulo do post
+      let divPostTitleWrapper = document.createElement("div");
+      divPostTitleWrapper.classList.add("post-tittle-wrapper");
+      divPostWrapper.appendChild(divPostTitleWrapper);
+      
+      // Elemento h2
+      let h2Element = document.createElement("h2");
+      h2Element.textContent = postItem.title["#text"];
+      divPostTitleWrapper.appendChild(h2Element);
+
+      //Wrapper de descrição do post
+      let divPostDescriptionWrapper = document.createElement("div");
+      divPostDescriptionWrapper.classList.add("post-description-wrapper");
+      divPostWrapper.appendChild(divPostDescriptionWrapper);
+
+      // Elemento p
+      let pPostDescription = document.createElement("p");
+      pPostDescription.classList.add("post-description");
+      pPostDescription.textContent = postItem.description[0].match(/<p>(.*?)<\/p>/)[1];
+      console.log(pPostDescription.textContent);
+      divPostDescriptionWrapper.appendChild(pPostDescription);
+
+      //Wrapper de link para postagem blog
+      let divPostLinkWrapper = document.createElement("div");
+      divPostLinkWrapper.classList.add("post-link-wrapper");
+      divPostWrapper.appendChild(divPostLinkWrapper);
+      
+      // Elemento link
+      let postLinkWrapper = document.createElement("a");
+      postLinkWrapper.classList.add("post-link");
+      postLinkWrapper.href = postItem.link["#text"];
+      postLinkWrapper.textContent = "Leia mais"
+      postLinkWrapper.target = "_blank";
+      divPostLinkWrapper.appendChild(postLinkWrapper);
+
+      // Adiciona post no posts-wrapper
+      blogPostWrapper.appendChild(divPostWrapper);
+    }
+  }
+</script>
