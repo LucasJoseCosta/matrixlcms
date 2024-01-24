@@ -38,7 +38,7 @@ const CepLocals = {
         const localRequest = new Promise((resolve, reject) => {
             $.ajax({
                 type: "GET",
-                url: `${url}/api/v2/places?warehouse=true`,
+                url: `/api/v2/places?warehouse=true`,
                 data: { cep: zip },
                 dataType: "json",
                 headers: {
