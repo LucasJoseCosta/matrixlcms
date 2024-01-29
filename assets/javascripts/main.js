@@ -9,10 +9,10 @@ import { NewsletterComponent, PriceComponent } from './components/vndaComponents
 import CepLocals from './common/cepLocals.js';
 
 let threshold = 700;
-if (window.innerWidth < 768) threshold = 400
+if (window.innerWidth < 768) threshold = 400;
 
 window.lazyLoadOptions = {
-  elements_selector: ".lazy",
+  elements_selector: '.lazy',
   threshold,
   callback_loaded: (el) => {
     const element = el.closest('.MagicZoom');
@@ -22,9 +22,13 @@ window.lazyLoadOptions = {
   },
 };
 
-window.addEventListener("LazyLoad::Initialized", event => {
-  window.lazyLoadInstance = event.detail.instance
-}, { passive: true });
+window.addEventListener(
+  'LazyLoad::Initialized',
+  (event) => {
+    window.lazyLoadInstance = event.detail.instance;
+  },
+  { passive: true }
+);
 
 // ==========================================
 // Inicialização
@@ -36,9 +40,9 @@ console.log(
 
 window.addEventListener('DOMContentLoaded', () => {
   if (window.innerWidth < 992) {
-    MenuMobile.init(); 
+    MenuMobile.init();
   }
-  //CepLocals.init();
+  CepLocals.init();
   CartDrawer.init();
   Header.init();
   Footer.init();
