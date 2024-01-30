@@ -75,8 +75,6 @@
                               "htmlTag": "p"
                               }
     {% endcapture %}
-
-    {% if logged_in %}
       <div class="price-wrapper">
         <div
           class="product-price price {% if discount_amount %} -discount {% endif %}"
@@ -93,13 +91,6 @@
         </div>
         <p class="quantity">{{ product.variants.size }} opções disponíveis</p>
       </div>
-    {% else %}
-      <div class="price-wrapper">
-        <div class="product-price price">
-            <a href="/entrar" class="price_value not_logged_in">Faça login para comprar</a>
-        </div>
-      </div>
-    {% endif %}
   </div>
 
   {% comment %}
@@ -107,7 +98,6 @@
   Retirar ou comentar caso não for utilizado
   {% endcomment %}
 
-  {% if logged_in %}
     {% if product.available %}
       <button
         aria-label="Adicionar produto ao carrinho"
@@ -124,14 +114,6 @@
         <span class="text">PRODUTO INDISPONÍVEL</span>
       </button>
     {% endif %}
-  {% else %} 
-    <button
-      aria-label="Produto indisponível"
-      class="button-default -outlined -unavailable not_logged_in_button"
-      type="button">
-      <span class="text">COMPRAR</span>
-    </button>
-  {% endif %}
   
 
   {% render 'partials/content/product/purchase', product: product, showButton: true %}

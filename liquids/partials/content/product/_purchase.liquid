@@ -58,7 +58,6 @@
     {% endif %}
 
     {% if showButton %}
-      {% if logged_in %}
         <button
           aria-label="Adicionar no carrinho"
           type="submit"
@@ -71,18 +70,6 @@
           data-event-json='{% gtm item: product %}'>
           {{ text_string }}
         </button>
-      {% else %}  
-        <button
-          aria-label="Adicionar no carrinho"
-          type="submit"
-          class="add-to-cart-button button-default not_logged_in_button {{ extra_class }}"
-          data-text-available='{{ text_string }}'
-          data-text-unavailable="<span>Indisponível</span>"
-          data-text-added='<span>Adicionado</span><svg class="icon"><use xlink:href="#icon-check"/></svg>'
-        >
-          {{ text_string }}
-        </button>
-      {% endif %}
     {% endif %}
   </div>
 

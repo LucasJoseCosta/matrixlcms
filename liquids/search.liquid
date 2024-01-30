@@ -18,7 +18,7 @@
 
 {% capture html_products %}
   {% for product in products %}
-    {% render 'partials/components/product_block', product: product, lazy: 'lazy', logged_in: logged_in %}
+    {% render 'partials/components/product_block', product: product, lazy: 'lazy' %}
   {% endfor %}
 {% endcapture %}
 

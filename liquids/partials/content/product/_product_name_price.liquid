@@ -17,8 +17,6 @@
     "htmlTag": "h2"
     }
   {% endcapture %}
-
-  {% if logged_in %}
     <div class="price-wrapper">
       <div
         class="product-price"
@@ -30,9 +28,4 @@
         data-discount-percent="{{ discount_amount | default: 0 }}"
       ></div>
     </div>
-  {% else %}
-    <div class="price-wrapper">
-      <a href="/entrar" class="price_value not_logged_in">Faça login para comprar</a>
-    </div>
-  {% endif %}  
 </div>

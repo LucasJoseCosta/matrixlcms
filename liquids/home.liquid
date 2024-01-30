@@ -35,9 +35,9 @@
 {% endif %}
 
 {% render 'partials/content/home/icons', position: 'home-banner-icones' %}
-{% render 'partials/components/carousel', tag_name: 'home-produtos-superior', logged_in: logged_in %}
+{% render 'partials/components/carousel', tag_name: 'home-produtos-superior' %}
 {% render 'partials/content/home/categories', position: 'home-banner-categorias', limit: 2 %}
-{% render 'partials/components/carousel', tag_name: 'home-produtos-central', logged_in: logged_in %}
+{% render 'partials/components/carousel', tag_name: 'home-produtos-central' %}
 
 {% if mobile %}
   {% render 'partials/content/home/fullbanner', position: 'home-banner-secundario-mobile', resolution: '-mobile', aux: '-secundario' %}
@@ -45,7 +45,7 @@
   {% render 'partials/content/home/fullbanner', position: 'home-banner-secundario', resolution: '-desktop', aux: '-secundario' %}
 {% endif %}
 
-{% render 'partials/components/carousel', tag_name: 'home-produtos-inferior', logged_in: logged_in %}
+{% render 'partials/components/carousel', tag_name: 'home-produtos-inferior' %}
 {% render "partials/content/home/highlight", position: 'home-banner-grid', limit: 3 %}
 
 {% comment %} {% render 'partials/content/home/grid_products', tag_name: 'home-produtos-listagem', per_page: 12, infinity: true %} {% endcomment %}

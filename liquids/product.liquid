@@ -55,7 +55,7 @@
 
     <div class="right-container">
       <div class="product-infos">
-          {% render 'partials/content/product/infos/infos', product: product, descricao_curta: descricao_curta, tag_medidas: tag_medidas, current_shop: current_shop, home_url: home_url, logged_in: logged_in, description_table: description_table %}
+          {% render 'partials/content/product/infos/infos', product: product, descricao_curta: descricao_curta, tag_medidas: tag_medidas, current_shop: current_shop, home_url: home_url, description_table: description_table %}
       </div>
 
       {% if descricao_parts %}
@@ -98,7 +98,7 @@
 {% endcomment %}
 
 {% if relacionado %}
-  {% render 'partials/components/carousel', tag_name: relacionado.name, current_product: product, logged_in: logged_in %}
+  {% render 'partials/components/carousel', tag_name: relacionado.name, current_product: product %}
 {% endif %} 
 
 {% render 'partials/content/product/size_guide', product: product, tag_medidas: tag_medidas %}
