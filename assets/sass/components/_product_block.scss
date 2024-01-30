@@ -57,6 +57,10 @@
     color: #3c3c3c;
   }
 
+  > .description.margin-top-auto {
+    margin-top: auto;
+  }
+
   > .button-default {
     margin-top: 1.5rem;
     width: 100%;
@@ -66,6 +70,18 @@
     &:hover {
       background-color: #fff !important;
       color: #003e62 !important;
+    }
+  }
+
+  > .button-default.disabled {
+    background-color: #bdbdbd !important;
+    color: #3c3c3c !important;
+    border: 1px solid #bdbdbd;
+
+    &:hover {
+      background-color: #bdbdbd !important;
+      color: #3c3c3c !important;
+      border: 1px solid #bdbdbd;
     }
   }
 

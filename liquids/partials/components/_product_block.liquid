@@ -75,7 +75,7 @@
                               "htmlTag": "p"
                               }
     {% endcapture %}
-      <div class="price-wrapper">
+      <div class="price-wrapper" data-product-price>
         <div
           class="product-price price {% if discount_amount %} -discount {% endif %}"
           data-was-processed="false"
@@ -90,6 +90,11 @@
           {% endif %}
         </div>
         <p class="quantity">{{ product.variants.size }} opções disponíveis</p>
+      </div>
+      <div class="price-wrapper hidden" data-login-for-buy>
+        <div class="product-price price">
+            <a href="/entrar" class="price_value not_logged_in">Faça login para comprar</a>
+        </div>
       </div>
   </div>
 

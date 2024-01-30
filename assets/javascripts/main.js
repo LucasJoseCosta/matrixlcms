@@ -7,6 +7,7 @@ import Webforms from './common/webforms';
 import ProductPurchase from './components/productPurchase.js';
 import { NewsletterComponent, PriceComponent } from './components/vndaComponents.js';
 import CepLocals from './common/cepLocals.js';
+import LoggedIn from './common/loggedIn.js';
 
 let threshold = 700;
 if (window.innerWidth < 768) threshold = 400;
@@ -43,6 +44,7 @@ window.addEventListener('DOMContentLoaded', () => {
     MenuMobile.init();
   }
   //CepLocals.init();
+  LoggedIn.init();
   CartDrawer.init();
   Header.init();
   Footer.init();

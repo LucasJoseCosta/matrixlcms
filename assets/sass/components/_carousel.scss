@@ -36,13 +36,13 @@
       .description {
         display: flex;
         flex-direction: column;
-        height: 40%;
+        //height: 40%;
         justify-content: space-between;
       }
     }
 
     .product-block > .description {
-      margin-bottom: auto;
+      //margin-bottom: auto;
     }
 
     .swiper-slide {
@@ -108,7 +108,7 @@
     .swiper-wrapper {
       .swiper-slide {
         .image {
-          img {         
+          img {
             object-fit: contain;
           }
         }
@@ -116,7 +116,7 @@
     }
   }
 }
- 
+
 .carousel {
   .button-default {
     background-color: #003e62 !important;

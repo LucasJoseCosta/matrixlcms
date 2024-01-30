@@ -109,6 +109,23 @@
     }
   }
 
+  > .infos-compra .actions-wrapper .add-to-cart-button.width-100 {
+    width: 100%;
+  }
+
+  > .infos-compra .actions-wrapper .add-to-cart-button.disabled {
+    width: 100%;
+    background-color: #bdbdbd !important;
+    color: #3c3c3c !important;
+    border: 1px solid #bdbdbd;
+
+    &:hover {
+      background-color: #bdbdbd !important;
+      color: #3c3c3c !important;
+      border: 1px solid #bdbdbd;
+    }
+  }
+
   > .infos-compra .msg-response .msg-error.-visible {
     margin-top: 2rem;
     display: block;
