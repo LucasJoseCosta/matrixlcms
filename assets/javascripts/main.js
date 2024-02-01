@@ -43,7 +43,7 @@ window.addEventListener('DOMContentLoaded', () => {
   if (window.innerWidth < 992) {
     MenuMobile.init();
   }
-  //CepLocals.init();
+  CepLocals.init();
   LoggedIn.init();
   CartDrawer.init();
   Header.init();

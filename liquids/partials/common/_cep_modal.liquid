@@ -3,8 +3,8 @@
     <h3 class="modal-title">Digite seu CEP</h3>
     <button class="modal-close" data-modal-close>X</button>
     <div class="modal-body" data-modal-body>
-      <form action="/api/v2/places?warehouse=true" method="GET" id="chose-local" class="modal-form" data-modal-form>
-        <input id="cep" class="modal-input" name="cep" type="tel" data-modal-input>
+      <form action="/cep/choose-local" method="POST" id="choose-local" class="modal-form" data-modal-form>
+        <input id="cep" class="modal-input" name="zip" type="tel" data-modal-input>
         <small class="modal-input-error hidden" data-modal-input-error>Este CEP é inválido!</small>
         <a class="modal-link-search" href="http://www.buscacep.correios.com.br/sistemas/buscacep/" target="_blank" title="Busque pelo seu CEP">
           Não sabe seu CEP? Pesquise aqui. 

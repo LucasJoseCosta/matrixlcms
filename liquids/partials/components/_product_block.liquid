@@ -2,7 +2,7 @@
 
 {% assign image_urls = product.images | map: 'url' | uniq %}
 {% assign class_sold_out = '' %}
-{% assign category_tag = product.tags |  where: 'type', 'categoria' | first %}
+{% assign category_tag = product.tags |  where: 'type', 'marca' | first %}
 
 {% unless product.available %}
   {% assign class_sold_out = 'sold-out' %}
