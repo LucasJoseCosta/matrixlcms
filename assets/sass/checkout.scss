@@ -135,6 +135,18 @@ html {
   }
 }
 
+.form.shipping {
+  .methods {
+    display: none;
+    .tw-w-full.tw-text-red-600.tw-text-sm {
+      display: none;
+    }
+    .tw-w-full.tw-text-red-600.tw-text-sm::before {
+      content: "Não realizamos a entrega dos produtos no carrinho para esta região";
+    }
+  }
+}
+
 .main-content {
   .closed {
     .summary {
