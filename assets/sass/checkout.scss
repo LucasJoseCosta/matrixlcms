@@ -225,14 +225,18 @@ html {
   }
 }
 
-.toggle-content {
-  .shipping {
-    .methods {
-      .tw-w-full {
-        display: none;
-      }
-      .tw-w-full::before {
-        content: "Não realizamos a entrega dos produtos no carrinho para esta região";
+.main {
+  .main-content {
+    .toggle-content {
+      .shipping {
+        .methods {
+          .tw-w-full {
+            display: none;
+          }
+          .tw-w-full::before {
+            content: "Não realizamos a entrega dos produtos no carrinho para esta região";
+          }
+        }
       }
     }
   }
