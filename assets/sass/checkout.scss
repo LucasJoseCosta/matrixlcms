@@ -135,18 +135,6 @@ html {
   }
 }
 
-.form.shipping {
-  .methods {
-    display: none;
-    .tw-w-full.tw-text-red-600.tw-text-sm {
-      display: none;
-    }
-    .tw-w-full.tw-text-red-600.tw-text-sm::before {
-      content: "Não realizamos a entrega dos produtos no carrinho para esta região";
-    }
-  }
-}
-
 .main-content {
   .closed {
     .summary {
@@ -242,15 +230,29 @@ html {
     .toggle-content {
       .shipping {
         .methods {
-          display: none;
           .tw-w-full.tw-text-red-600.tw-text-sm {
-            display: none;
+            visibility: hidden;
           }
           .tw-w-full.tw-text-red-600.tw-text-sm::before {
             content: "Não realizamos a entrega dos produtos no carrinho para esta região";
+            visibility: visible;
+            display: block;
           }
         }
       }
+    }
+  }
+}
+
+.order-summary {
+  .summary-form-group {
+    .shipping-unavailable {
+      visibility: hidden;
+    }
+    .shipping-unavailable::before {
+      content: "Não realizamos a entrega dos produtos no carrinho para esta região";
+      visibility: visible;
+      display: block;
     }
   }
 }
