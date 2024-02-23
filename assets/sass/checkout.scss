@@ -45,12 +45,11 @@ html {
   margin-top: 5px;
 
   @media screen and (max-width: 768px) {
-    font-size: .95rem !important;
+    font-size: 0.95rem !important;
   }
-
 }
 
-.md\:tw-max-h-16  {
+.md\:tw-max-h-16 {
   max-height: 5rem !important;
 }
 
@@ -62,7 +61,7 @@ html {
   font-weight: 600 !important;
 }
 
-.tw-sticky  {
+.tw-sticky {
   height: 5rem !important;
 }
 
@@ -109,8 +108,7 @@ html {
 }
 
 .input {
-  .content 
-  input {
+  .content input {
     font-size: 1.25rem !important;
   }
 
@@ -125,13 +123,13 @@ html {
       font-size: 1rem !important;
 
       @media screen and (max-width: 768px) {
-        font-size: .95rem !important;
+        font-size: 0.95rem !important;
       }
     }
 
     .input .content input {
       @media screen and (max-width: 768px) {
-        font-size: .95rem !important;
+        font-size: 0.95rem !important;
       }
     }
   }
@@ -185,7 +183,7 @@ html {
     .stepper-navigation {
       @media screen and (max-width: 768px) {
         align-items: center;
-        font-size: .85rem !important;
+        font-size: 0.85rem !important;
         justify-content: space-between;
       }
     }
@@ -222,6 +220,19 @@ html {
     .toggle-content {
       .cta-section {
         position: unset !important;
+      }
+    }
+  }
+}
+
+.toggle-content {
+  .shipping {
+    .methods {
+      .tw-w-full {
+        display: none;
+      }
+      .tw-w-full::before {
+        content: "Não realizamos a entrega dos produtos no carrinho para esta região";
       }
     }
   }

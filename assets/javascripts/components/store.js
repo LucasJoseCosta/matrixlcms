@@ -10,9 +10,7 @@ const Store = {
     const btnComprar = parent.querySelector('[data-action="add-cart"]');
     const urlAdd = '/carrinho/adicionar';
     const formData = urlencodeFormData(new FormData(form));
-    const boxResponse = parent.querySelector(
-      '[data-form-product] .msg-response:not(.resp-validate)'
-    );
+    const boxResponse = parent.querySelector('[data-form-product] .msg-response:not(.resp-validate)');
 
     // console.info('addItem');
     // console.info(formData);
@@ -24,15 +22,13 @@ const Store = {
         const response = await fetch(urlAdd, {
           method: 'POST',
           headers: {
-            'Accept': 'application/json, text/javascript, */*; q=0.0',
+            Accept: 'application/json, text/javascript, */*; q=0.0',
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
           },
           body: formData,
         });
 
         const html = await response.text();
-
-        console.log('success');
 
         if (typeof callback == 'function') {
           callback('produto-adicionado', html, boxResponse, form);
@@ -180,8 +176,7 @@ const Store = {
 
         boxResponse.classList.add('error');
         boxResponse.classList.remove('success');
-        boxResponse.querySelector('span').innerHTML =
-          'Ocorreu um erro, tente novamente.';
+        boxResponse.querySelector('span').innerHTML = 'Ocorreu um erro, tente novamente.';
       }
     }
   },
