@@ -73,7 +73,7 @@ img {
   }
 
   &.-square::after {
-    padding-bottom: 100%;
+    padding-bottom: 80%;
   }
 
   &.-horizontal::after {
@@ -263,7 +263,9 @@ form[data-webform] {
 
     input,
     textarea {
-      &.-emphasis::placeholder { color: var(--red) !important }
+      &.-emphasis::placeholder {
+        color: var(--red) !important;
+      }
     }
   }
 
@@ -274,7 +276,9 @@ form[data-webform] {
       display: none;
       font-size: 1.2rem;
       margin-top: 1rem;
-      &.-visible { display: block }
+      &.-visible {
+        display: block;
+      }
     }
   }
 }
