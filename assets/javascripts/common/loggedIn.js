@@ -83,6 +83,7 @@ const LoggedIn = {
     await this.getClient();
     this.handleProductsBlocks();
     this.handleProductPage();
+    this.seeMoreHandler();
   },
 };
 
