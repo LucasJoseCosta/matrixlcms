@@ -49,8 +49,6 @@ const InfinityScroll = {
         InfinityScroll.setScript(script);
       });
 
-    LoggedIn.handleProductsBlocks();
-
     return doc.querySelectorAll('.product-block');
   },
   updatePrice: function () {
@@ -70,6 +68,8 @@ const InfinityScroll = {
       newProducts.forEach((product) => {
         productWrapper.appendChild(product);
       });
+
+      LoggedIn.handleProductsBlocks();
 
       this.setCurrentPage(currentPage + 1);
 
