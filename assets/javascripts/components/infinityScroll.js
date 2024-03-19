@@ -39,10 +39,9 @@ const InfinityScroll = {
 
     const parser = new DOMParser();
     const doc = parser.parseFromString(data, 'text/html');
-    const script = doc.querySelector('[data-product-variants]');
 
     // Busca por scripts para compra rápida
-    const scripts = doc.querySelectorAll('[data-variants-script]');
+    const scripts = doc.querySelectorAll('[data-product-variants]');
     if (scripts.length > 0)
       scripts.forEach((script) => {
         InfinityScroll.setScript(script);
