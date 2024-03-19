@@ -24,6 +24,7 @@ const LoggedIn = {
   },
   handleProductsBlocks: function () {
     const { loggedIn, productsEl } = this;
+    console.log(productsEl.length);
     productsEl.forEach((productEl) => {
       const buyButton = productEl.querySelector('.button-default');
       const description = productEl.querySelector('.description');
