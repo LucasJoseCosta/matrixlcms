@@ -42,7 +42,7 @@ window.addEventListener('DOMContentLoaded', () => {
   if (window.innerWidth < 992) {
     MenuMobile.init();
   }
-  LoggedIn.init();
+  //LoggedIn.init();
   CartDrawer.init();
   Header.init();
   Footer.init();
