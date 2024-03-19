@@ -23,7 +23,8 @@ const LoggedIn = {
     }
   },
   handleProductsBlocks: function () {
-    const { loggedIn, productsEl } = this;
+    const { loggedIn } = this;
+    const productsEl = document.querySelectorAll('[data-product-box]');
     console.log(productsEl.length);
     productsEl.forEach((productEl) => {
       const buyButton = productEl.querySelector('.button-default');
