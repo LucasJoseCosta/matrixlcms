@@ -1,4 +1,5 @@
 import ProductPurchase from '../components/productPurchase';
+import LoggedIn from '../common/loggedIn';
 
 const InfinityScroll = {
   params: window._pagination,
@@ -9,6 +10,7 @@ const InfinityScroll = {
   productsWrapper: document.querySelectorAll('.section-list-products')[0],
   productWrapper: document.querySelectorAll('.list-products')[0],
   button: document.querySelector('[data-load-more]'),
+  LoggedIn: LoggedIn,
   stopLoading: function () {
     const button = this.button;
 
@@ -46,6 +48,8 @@ const InfinityScroll = {
       scripts.forEach((script) => {
         InfinityScroll.setScript(script);
       });
+
+    LoggedIn.handleProductsBlocks();
 
     return doc.querySelectorAll('.product-block');
   },

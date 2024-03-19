@@ -76,9 +76,9 @@ const LoggedIn = {
   seeMoreHandler: function () {
     const { btnLoadMore } = this;
     btnLoadMore.addEventListener('click', () => {
-      setTimeout(() => {
-        this.handleProductsBlocks();
-      }, 1000);
+      // setTimeout(() => {
+      //   this.handleProductsBlocks();
+      // }, 1000);
     });
   },
   init: async function () {
