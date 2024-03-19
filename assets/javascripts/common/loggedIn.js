@@ -2,7 +2,6 @@ const LoggedIn = {
   loggedIn: false,
   productsEl: document.querySelectorAll('[data-product-box]'),
   productPage: document.querySelector('[data-section-product'),
-  btnLoadMore: document.querySelector('[data-load-more]'),
   getClient: async function () {
     try {
       let response = await fetch('/conta/cliente', {
@@ -74,19 +73,10 @@ const LoggedIn = {
       }
     }
   },
-  seeMoreHandler: function () {
-    const { btnLoadMore } = this;
-    btnLoadMore.addEventListener('click', () => {
-      // setTimeout(() => {
-      //   this.handleProductsBlocks();
-      // }, 1000);
-    });
-  },
   init: async function () {
     await this.getClient();
     this.handleProductsBlocks();
     this.handleProductPage();
-    this.seeMoreHandler();
   },
 };
 
