@@ -1,9 +1,9 @@
 {% if tag_name and tag_name != blank %}
-  {% load_tag name: tag_name %}
+  {% load_tag name: tag_name  %}
   {% assign tag = loaded_tag %}
 
   {% if tag and tag != blank %}
-    {% load_products tag: tag.name %}
+    {% load_products tag: tag.name page: 1 per_page: 20 %}
 
     <section class="section products carousel container">
       <div class="header">
