@@ -1,4 +1,4 @@
-import { addAsset } from "../components/utilities";
+import { addAsset } from '../components/utilities';
 
 const CartDrawer = {
   root: document.querySelector('#component-cart-drawer-root'),
@@ -7,14 +7,14 @@ const CartDrawer = {
   settings: window.cartDrawerSettings || false,
   instance: false,
 
-  setCartDrawer: function() {
+  setCartDrawer: function () {
     const { settings, root } = CartDrawer;
 
     if (!root || !settings) return;
-  
+
     // Define frete grátis
-    let disableShippingCalculation = true
-    if (settings.freShippingValue > 1) disableShippingCalculation = false
+    let disableShippingCalculation = true;
+    if (settings.freeShippingValue > 1) disableShippingCalculation = false;
 
     // Inicia o componente
     const componentCartDrawer = new Vnda.Component.CartDrawer({
@@ -23,7 +23,7 @@ const CartDrawer = {
       startOpen: false,
       titleCart: 'Carrinho de compras',
       disableShippingCalculation,
-      freeShipping: settings.freeShippingValue || 0
+      freeShipping: settings.freeShippingValue > 1 || 0,
     });
 
     // Renderiza o componente
@@ -33,16 +33,16 @@ const CartDrawer = {
     CartDrawer.instance = componentCartDrawer;
 
     // dispara evento de carregamento, escutado por CartDrawer.show()
-    root.dispatchEvent(new Event('vnda:cart-drawer-loaded'))
+    root.dispatchEvent(new Event('vnda:cart-drawer-loaded'));
   },
 
-  loadComponent: function() {
+  loadComponent: function () {
     const { settings } = CartDrawer;
     addAsset(settings.script, CartDrawer.setCartDrawer);
     addAsset(settings.styles);
   },
 
-  handleCartButton: function(button) {
+  handleCartButton: function (button) {
     // Evita múltiplos cliques caso o carrinho precisa ser instanciado primeiro
     if (button.classList.contains('-loading')) {
       return;
@@ -50,15 +50,16 @@ const CartDrawer = {
 
     // Abre o cart drawer
     button.classList.add('-loading');
-    CartDrawer.show(() => { button.classList.remove('-loading') })
+    CartDrawer.show(() => {
+      button.classList.remove('-loading');
+    });
   },
 
   show: function (callback) {
-
     const { root } = CartDrawer;
 
     // No mobile, fecha o menu primeiro
-    if (window.mmenu) window.mmenu.close()
+    if (window.mmenu) window.mmenu.close();
 
     // Instancia o componente, caso ainda não exista
     if (!CartDrawer.instance) CartDrawer.loadComponent();
@@ -66,22 +67,21 @@ const CartDrawer = {
     // Observa criação da instância inicial, caso não tenha
     if (CartDrawer.instance === false) {
       root.addEventListener('vnda:cart-drawer-loaded', () => {
-        CartDrawer.instance.open()
-        if (typeof callback === 'function') callback()
-      })
+        CartDrawer.instance.open();
+        if (typeof callback === 'function') callback();
+      });
     } else {
       // Já possui cart drawer instanciado, retorna abertura
       CartDrawer.instance.open();
-      if (typeof callback === 'function') callback()
+      if (typeof callback === 'function') callback();
     }
   },
 
   getCartItens: async function () {
     try {
       const response = await fetch('/carrinho/itens');
-      const itens = await response.json()
+      const itens = await response.json();
       return itens;
-
     } catch (error) {
       console.error('Erro ao buscar a quantidade de produtos do carrinho');
       console.error(error);
@@ -102,11 +102,12 @@ const CartDrawer = {
     // Atualiza o contador de itens do carrinho
     _this.updateCartCount();
 
-    if (buttons.length > 0) buttons.forEach(button => {
-      button.addEventListener('click', () => {
-        _this.handleCartButton(button)
-      })
-    })
+    if (buttons.length > 0)
+      buttons.forEach((button) => {
+        button.addEventListener('click', () => {
+          _this.handleCartButton(button);
+        });
+      });
   },
 };
 
