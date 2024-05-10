@@ -1,0 +1,26 @@
+<div class="post-block">
+  <a class="link" href="{{ post.url | replace: 'm/cockpit', 'm/blog' }}" aria-label="Acessar conteúdo do post {{ post.title }}">
+
+    {% if post.thumb.path and post.thumb.path != blank %}
+      <figure class="image -square">
+        <img
+          class="lazy"
+          data-src='{{ post.thumb.path }}'
+          alt="Imagem do post {{ post.title }}"
+        >
+      </figure>
+    {% endif %}
+
+
+    <div class="infos">
+      <h3 class="title">{{ post.title }}</h3>
+
+      {% if post.description and post.description != blank %}
+        <div class="description">
+          {{ post.description }}
+        </div>
+      {% endif %}
+    </div>
+    
+  </a>
+</div>

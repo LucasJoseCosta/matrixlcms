@@ -1,0 +1,20 @@
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  margin-bottom: 2rem;
+
+  > a,
+  > span {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    font-size: var(--font-size-small);
+    transition: var(--transition);
+
+    &:hover:not(.current) { color: var(--secondary-color) }
+
+    &.-current { font-weight: 700 }
+  }
+}

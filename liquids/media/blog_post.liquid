@@ -1,0 +1,103 @@
+{% comment %} Parâmetro - ID {% endcomment %}
+{% comment %} O post atual é carregado com base no ID existente na URL {% endcomment %}
+{% getparam 'id' as params_id %}
+
+{% comment %} API Key - Configurar no cockpit {% endcomment %}
+{% assign api_key = 'XXX' %}
+
+{% load_media from:'cockpit' collection:'posts' api_key: api_key media_id: params_id %}
+
+{% assign post = loaded_posts[0] %}
+
+{% assign meta_title = post.title | append: ' | ' | append: current_shop.name %}
+
+{% head %}
+  <meta property="og:url" content="{{ home_url }}{{ post.url | replace: 'cockpit', 'blog' }}"/>
+  <meta content="website" property="og:type"/>
+  <meta property="og:title" content="{{ post.title }} | {{ current_shop.name }}"/>
+  <meta property="og:image" content="{{ post.thumb.path }}"/>
+  <meta name="image" content="{{ post.thumb.path }}"/>
+  <meta meta="url" content="{{ home_url }}{{ post.url | replace: 'cockpit', 'blog' }}"/>
+  <title>{{ post.title }} | {{ current_shop.name }}</title>
+  <link href="pages/blog/post.css" inline rel="stylesheet" type="text/css">
+  <title>{{ meta_title }}</title>
+{% endhead %}
+
+{% body %}
+  <script src="{{ 'blog.js' | javascript_path }}"></script>
+{% endbody %}
+
+{% comment %}
+
+- Estrutura base do Post
+
+{% endcomment %}
+<section class="post">
+
+  {% comment %} Fullbanner - Configurar no cockpit {% endcomment %}
+  <section class="fullbanner">
+    {% if mobile %}
+      {% if post.fullbanner_mobile.path and post.fullbanner_mobile.path != blank %}
+        <figure class="image -vertical">
+          <img src="{{ post.fullbanner_mobile.path }}" alt="Banner principal do post {{ post.title }}">
+        </figure>
+      {% endif %}
+    {% else %}
+      {% if post.fullbanner_desktop.path and post.fullbanner_desktop.path != blank %}
+        <figure class="image -horizontal">
+          <img src="{{ post.fullbanner_desktop.path }}" alt="Banner principal do post {{ post.title }}">
+        </figure>
+      {% endif %}
+    {% endif %}
+  </section>
+
+  {% comment %} Montagem do conteúdo {% endcomment %}
+  <section class="container">
+    
+    {% render 'media/components/breadcrumbs', params_category: null %}
+
+    <h1 class="title">{{ post.title }}</h1>
+
+    {% if post.author or post.date %}
+      <div class="details">
+
+        {% comment %} Autor do post - Configurar no cockpit {% endcomment %}
+        {% if post.author and post.author != blank %}
+          <span class="author">{{ post.author }} - </span>
+        {% endif %}
+
+        {% if post.date and post.date != blank %}
+          <time class="date">
+            {{ post.date
+              | date: '%d de %m de %Y'
+              | replace: 'de 01 de', 'de Janeiro de'
+              | replace: 'de 02 de', 'de Fevereiro de'
+              | replace: 'de 03 de', 'de Março de'
+              | replace: 'de 04 de', 'de Abril de'
+              | replace: 'de 05 de', 'de Maio de'
+              | replace: 'de 06 de', 'de Junho de'
+              | replace: 'de 07 de', 'de Julho de'
+              | replace: 'de 08 de', 'de Agosto de'
+              | replace: 'de 09 de', 'de Setembro de'
+              | replace: 'de 10 de', 'de Outubro de'
+              | replace: 'de 11 de', 'de Novembro de'
+              | replace: 'de 12 de', 'de Dezembro de'
+            }}
+          </time>
+        {% endif %}
+        
+      </div>
+    {% endif %}
+
+    <div class="content">
+      {{ post.content | replace: '<img src="', '<img class="lazy" data-src="' | replace: '<iframe src="', '<iframe class="lazy" data-src="' }}
+    </div>
+
+  </section>
+
+  {% comment %} Posts Relacionados - Configurar no cockpit {% endcomment %}
+  {% if post contains 'relateds' and post.relateds != blank %}
+    {% render 'media/components/relateds', related_posts: post.relateds, params_id: params_id, api_key: api_key %}
+  {% endif %}
+
+</section>

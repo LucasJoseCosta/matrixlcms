@@ -1,5 +1,4 @@
-import ProductPurchase from '../components/productPurchase';
-import LoggedIn from '../common/loggedIn';
+// Insira esse arquivo em javascripts/components
 
 const InfinityScroll = {
   params: window._pagination,
@@ -7,15 +6,17 @@ const InfinityScroll = {
     selector: '[data-update-price]',
     attr: 'update-price',
   },
-  productsWrapper: document.querySelectorAll('.section-list-products')[0],
-  productWrapper: document.querySelectorAll('.list-products')[0],
+  elementsWrapper: document.querySelectorAll('.section-list-products, .blog')[0],
+  elementWrapper: document.querySelectorAll('.list-products, .list-posts')[0],
+  element: '',
   button: document.querySelector('[data-load-more]'),
-  LoggedIn: LoggedIn,
+
   stopLoading: function () {
     const button = this.button;
 
     if (button != null) button.parentElement.removeChild(button);
   },
+
   setCurrentPage: function (_number) {
     const totalPages = this.params.totalPages;
 
@@ -34,7 +35,7 @@ const InfinityScroll = {
     return document.body.appendChild(newScript);
   },
 
-  loadProducts: async function () {
+  loadElements: async function () {
     const nextUrl = this.params.nextUrl;
     const response = await fetch(nextUrl);
     const data = await response.text();
@@ -43,57 +44,70 @@ const InfinityScroll = {
     const doc = parser.parseFromString(data, 'text/html');
 
     // Busca por scripts para compra rápida
-    const scripts = doc.querySelectorAll('[data-product-variants]');
-    if (scripts.length > 0)
-      scripts.forEach((script) => {
-        InfinityScroll.setScript(script);
-      });
+    const scripts = doc.querySelectorAll('[data-variants-script]');
+    scripts.length > 0 && scripts.forEach(script => this.setScript(script));
 
-    return doc.querySelectorAll('.product-block');
+    return doc.querySelectorAll('.product-block, .post-block');
   },
+
   updatePrice: function () {
     window.Vnda.Component.Price.update();
   },
+
   getNextPage: async function () {
     const currentPage = this.params.currentPage;
-    const wrapper = this.productsWrapper;
-    const productWrapper = this.productWrapper;
+    const wrapper = this.elementWrapper;
+    const elementWrapper = this.elementWrapper;
+    const button = this.button;
 
     if (!wrapper.classList.contains('-searching')) {
-      this.productsWrapper.classList.add('-searching');
-      this.button.classList.add('-searching');
+      wrapper.classList.add('-searching');
+      button.classList.add('-searching');
 
-      const newProducts = await this.loadProducts();
+      const newElements = await this.loadElements();
 
-      newProducts.forEach((product) => {
-        productWrapper.appendChild(product);
-      });
-
-      LoggedIn.handleProductsBlocks();
+      newElements.forEach(element => elementWrapper.appendChild(element));
 
       this.setCurrentPage(currentPage + 1);
 
-      ProductPurchase.init(true);
-      lazyLoadInstance.update();
-      this.updatePrice();
+      if (document.querySelector('.product-block')) {
+        window.ProductPurchase.init(true);
+        this.updatePrice(currentPage + 1)
+      }
+
+      window.lazyLoadInstance && window.lazyLoadInstance.update();
 
       wrapper.classList.remove('-searching');
-      this.button.classList.remove('-searching');
+      button.classList.remove('-searching');
     }
   },
 
+  updateBlogPagination: function () {
+    let infoToReplace = "blog?";
+
+    if (window.location.href.includes("categories=")) {
+      const categoryParams = window.location.href.split('blog?')[1];
+      infoToReplace = `blog?${categoryParams}&`;
+    }
+
+    this.params = JSON.parse(JSON.stringify(this.params)
+      .replaceAll('cockpit?', infoToReplace)
+      .replaceAll('cockpit', 'blog')
+    );
+
+  },
+
   init: function () {
+    const params = this.params;
     const button = this.button;
 
-    if (typeof this.params != undefined) {
+    if (typeof params != 'undefined') {
+
+      //Atualiza URLs da paginação do blog
+      window.location.href.includes("m/blog") && this.updateBlogPagination();
+
       if (button != null) {
-        button.addEventListener(
-          'click',
-          () => {
-            this.getNextPage();
-          },
-          { passive: true }
-        );
+        button.addEventListener('click', () => { this.getNextPage() }, { passive: true });
       }
     }
   },

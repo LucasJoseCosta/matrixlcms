@@ -1,0 +1,106 @@
+{% comment %} Parâmetros {% endcomment %}
+{% getparam 'categories' as params_category %}
+{% getparam 'page_blog' as params_page %}
+
+{% comment %} API Key - Configurar no cockpit {% endcomment %}
+{% assign api_key = "XXX" %}
+
+{% comment %} Organiza os posts de acordo com a data de criação {% endcomment %}
+{% assign sort = '{ "_created": -1 }' | from_json %}
+
+{% comment %} Filtro para retornar somente os posts marcados como Publicar - Configurar campo no cockpit {% endcomment %}
+{% assign filter = '{ "publish": true }' | from_json %}
+
+{% comment %} Caso esteja acessando uma página de categoria, serão carregados somente posts pertencentes à ela {% endcomment %}
+{% comment %} Retirar ou comentar caso não for utilizado {% endcomment %}
+{% if params_category %}
+  {% assign params_category = params_category %}
+  {% assign filter = '{ "publish": true, "categories": "#" }' | replace: '#', params_category | from_json %}
+{% endif %}
+
+{% unless params_page %}
+  {% assign params_page = 1 %}
+{% endunless %}
+
+
+{% comment %}
+  
+- Carregamento de todos os posts - utilizado para montar as categorias via javascript
+
+{% endcomment %}
+
+{% getparam 'fetch' as params_fetch %}
+{% if params_fetch and params_fetch == 'all' %}
+  {% load_media from: 'cockpit' collection: 'posts' api_key: api_key filter: filter limit: 999 populate: 1 %}
+  
+  <script data-script-blog>
+    window._posts = {{ loaded_posts | to_json }}
+  </script>
+
+{% else %}
+
+  {% comment %}
+
+  - Estrutura base do Blog
+
+  {% endcomment %}
+
+  {% head %}
+    <meta content="Blog | {{ current_shop.name }}" property="og:title"/>
+    <meta content="website" property="og:type"/>
+    <meta property="og:site" content="{{ current_shop.name }}"/>
+    <meta property="og:url" content="{{ home_url }}m/blog/"/>
+    <meta meta="url" content="{{ home_url }}m/blog/"/>
+
+    <link href="pages/blog/blog.css" inline rel="stylesheet" type="text/css">
+
+    <title>Blog - {{ current_shop.name }}</title>
+  {% endhead %}
+
+  {% body %}
+    <script src="{{ 'blog.js' | javascript_path }}"></script>
+  {% endbody %}
+
+  {% assign html_posts = '' %}
+  {% load_media from:'cockpit' collection:'posts' api_key: api_key filter: filter page: params_page limit: 16 sort: sort %}
+
+  {% comment %} Captura dos posts {% endcomment %}
+  {% if loaded_posts.size > 0 %}
+    {% for post in loaded_posts %}
+      {% capture html_posts %}
+        {{ html_posts }}
+        {% render 'media/components/post_block', post: post %}
+      {% endcapture %}
+    {% endfor %}
+  {% endif %}
+
+  {% comment %} Montagem do conteúdo {% endcomment %}
+  <section class="section container blog">
+
+    {% render 'media/components/breadcrumbs', params_category: params_category %}
+
+    {% if html_posts != blank %}
+
+      {% comment %} Lista de categorias existentes nos posts {% endcomment %}
+      {% comment %} Retirar ou comentar caso não for utilizado {% endcomment %}
+      <nav class="categories"></nav>
+      
+      <div class="posts list-posts">
+        {{ html_posts }}
+      </div>
+
+      {% comment %} O objeto media_pagination é retornado quando realizamos o load_media {% endcomment %}
+      {% comment %} Use pagination.liquid da tag para scroll infinito {% endcomment %}
+      {% comment %} Use pagination.liquid do blog para a paginação convencional {% endcomment %}
+
+      {% if media_pagination and media_pagination != blank %}
+        {% render 'partials/content/tag/pagination', pagination: media_pagination, infinity: true, current_url: current_url %}
+        {% comment %} {% render 'media/components/pagination': pagination: media_pagination, params_category: params_category %} {% endcomment %}
+      {% endif %}
+
+    {% else %}
+      <p class="empty">Não encontramos nenhum post</p>
+    {% endif %}
+
+  </section>
+{% endif %}

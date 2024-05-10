@@ -1,0 +1,22 @@
+<nav class="breadcrumbs">
+  
+  <a href="/" aria-label="Home do site">Home <span>/</span> </a>
+
+  <a
+    href="/m/blog"
+    aria-label="Início do Blog"
+    {% unless params_category %} class="current" {% endunless %}
+  >
+    Blog
+
+    {% if params_category %}
+      <span>/</span>
+    {% endif %}
+
+  </a>
+
+  {% if params_category %}
+    <span class="current">{{ params_category | capitalize }}</span>
+  {% endif %}
+  
+</nav>

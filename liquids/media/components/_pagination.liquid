@@ -1,0 +1,223 @@
+{% comment %}
+
+- Estrutura de exibição:
+
+<< < [n-2] [n-1] [n] [n+1] [n+2] > >>
+
+- n = pagina atual
+- n-2 exibe só quando n for a última página
+- n+2 só exibe quando n for a primeira página
+
+{% endcomment %}
+
+{% comment %} Configuração das URLs com categorias {% endcomment %}
+{% assign category = '' %}
+{% if params_category and params_category != blank %}
+  {% assign category = '&categories=' | append: params_category %}
+{% endif %}
+
+{% assign html_pagination = '' %}
+
+{% if pagination.total_pages > 1 %}
+
+  {% comment %} Página Anterior {% endcomment %}
+  {% if pagination.total_pages >= 2 and pagination.prev_url and pagination.current_page != 1 %}
+
+    {% assign prev_url = pagination.prev_url | replace: 'cockpit', 'blog' | append: category %}
+    {% unless prev_url contains 'page' %}
+      {% if prev_url contains 'categories' %}
+        {% assign prev_url = prev_url | replace: '&categories', '?categories' | append: "&page=1" %}
+      {% else %}
+        {% assign prev_url = prev_url | append: "?page=1" %}
+      {% endif %}
+    {% endunless %}
+
+    {% capture html_pagination %}
+      {{ html_pagination }}
+      <a
+        class="anchor"
+        href="{{ prev_url }}"
+        aria-label="Ir para a página anterior"
+        title="Anterior">
+          &lt;
+      </a>
+    {% endcapture %}
+  {% endif %}
+
+  {% comment %}
+
+  - Início estrutura
+
+  {% endcomment %}
+
+  {% comment %}  menos que 3 páginas = exibe todas {% endcomment %}
+  {% if pagination.total_pages < 4 %}
+    {% for page in pagination.pages %}
+      {% assign current_class = '' %}
+      {% if pagination.current_page == page.number %}
+        {% assign current_class = '-current' %}
+      {% endif %}
+
+      {% assign page_url = page.url | replace: 'cockpit', 'blog' | append: category %}
+      {% unless page_url contains 'page' %}
+        {% if page_url contains 'categories' %}
+          {% assign page_url = page_url | replace: '&categories', '?categories' | append: "&page=1" %}
+        {% else %}
+          {% assign page_url = page_url | append: "?page=1" %}
+        {% endif %}
+      {% endunless %}
+
+      {% capture html_pagination %}
+        {{ html_pagination }}
+        <a
+          class="anchor {{ current_class }}"
+          href="{{ page_url }}"
+          aria-label="Ir para a página {{ page.number }}"
+          title="Página {{ page.number }}">
+          {{ page.number }}
+        </a>
+      {% endcapture %}
+    {% endfor %}
+
+  {% comment %} mais que 3 páginas = monta estrutura {% endcomment %}
+  {% else %}
+
+    {% for page in pagination.pages %}
+
+      {% comment %} [n-2] {% endcomment %}
+      {% assign check = pagination.current_page | minus: 2 %}
+      {% if pagination.current_page == pagination.total_pages and page.number == check %}
+
+        {% assign page_url = page.url | replace: 'cockpit', 'blog' | append: category %}
+
+        {% capture html_pagination %}
+          {{ html_pagination }}
+          <a
+            class="anchor"
+            href="{{ page_url }}"
+            aria-label="Ir para a página {{ page.number }}"
+            title="Página {{ page.number }}">
+            {{ page.number }}
+          </a>
+        {% endcapture %}
+      {% endif %}
+
+      {% comment %} [n-1] {% endcomment %}
+      {% assign check = pagination.current_page | minus: 1 %}
+      {% if page.number == check %}
+  
+        {% assign page_url = page.url | replace: 'cockpit', 'blog' | append: category %}
+        {% unless page_url contains 'page' %}
+          {% if page_url contains 'categories' %}
+            {% assign page_url = page_url | replace: '&categories', '?categories' | append: "&page=1" %}
+          {% else %}
+            {% assign page_url = page_url | append: "?page=1" %}
+          {% endif %}
+        {% endunless %}
+
+        {% capture html_pagination %}
+          {{ html_pagination }}
+          <a
+            class="anchor"
+            href="{{ page_url }}"
+            aria-label="Ir para a página {{ page.number }}"
+            title="Página {{ page.number }}">
+            {{ page.number }}
+          </a>
+        {% endcapture %}
+      {% endif %}
+
+      {% comment %} [n] {% endcomment %}
+      {% if page.number == pagination.current_page %}
+
+        {% assign page_url = page.url | replace: 'cockpit', 'blog' | append: category %}
+        {% unless page_url contains 'page' %}
+          {% if page_url contains 'categories' %}
+            {% assign page_url = page_url | replace: '&categories', '?categories' | append: "&page=1" %}
+          {% else %}
+            {% assign page_url = page_url | append: "?page=1" %}
+          {% endif %}
+        {% endunless %}
+
+        {% capture html_pagination %}
+          {{ html_pagination }}
+          <a
+            class="anchor -current"
+            href="{{ page_url }}"
+            aria-label="Ir para a página {{ page.number }}"
+            title="Página {{ page.number }}">
+            {{ page.number }}
+          </a>
+        {% endcapture %}
+      {% endif %}
+
+      {% comment %} [n+1] {% endcomment %}
+      {% assign check = pagination.current_page | plus: 1 %}
+      {% if page.number == check %}
+
+        {% assign page_url = page.url | replace: 'cockpit', 'blog' | append: category %}
+
+        {% capture html_pagination %}
+          {{ html_pagination }}
+          <a
+            class="anchor"
+            href="{{ page_url }}"
+            aria-label="Ir para a página {{ page.number }}"
+            title="Página {{ page.number }}">
+            {{ page.number }}
+          </a>
+        {% endcapture %}
+      {% endif %}
+
+      {% comment %} [n+2] {% endcomment %}
+      {% assign check = pagination.current_page | plus: 2 %}
+      {% if pagination.current_page == 1 and page.number == check %}
+
+        {% assign page_url = page.url | replace: 'cockpit', 'blog' | append: category %}
+
+        {% capture html_pagination %}
+          {{ html_pagination }}
+          <a
+            class="anchor"
+            href="{{ page_url }}"
+            aria-label="Ir para a página {{ page.number }}"
+            title="Página {{ page.number }}">
+            {{ page.number }}
+          </a>
+        {% endcapture %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+
+  {% comment %}
+
+  - Fim estrutura
+  
+  {% endcomment %}
+
+  {% comment %} Próxima Página {% endcomment %}
+  {% if pagination.total_pages >= 2 and pagination.next_url and pagination.current_page != pagination.total_pages %}
+
+    {% assign next_url = pagination.next_url | replace: 'cockpit', 'blog' | append: category %}
+    
+    {% capture html_pagination %}
+      {{ html_pagination }}
+      <a
+        class="anchor"
+        href="{{ next_url }}"
+        aria-label="Ir para a próxima página"
+        title="Próxima">
+          &gt;
+      </a>
+    {% endcapture %}
+  {% endif %}
+
+{% endif %}
+
+{% comment %} ========== {% endcomment %}
+
+{% if html_pagination != blank %}
+  <section class="section blog-pagination container">
+    {{ html_pagination }}
+  </section>
+{% endif %}

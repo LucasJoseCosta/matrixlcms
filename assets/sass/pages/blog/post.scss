@@ -1,0 +1,39 @@
+@import "../../base/mixins";
+
+.post {
+  @import "./components/breadcrumbs";
+
+  > .container {
+    margin-top: 4rem;
+  }
+
+  > .container .title {
+    margin-top: 2rem;
+  }
+
+  > .container .details {
+    font-size: var(--font-size-small);
+    color: var(--gray-4);
+    margin-top: 4rem;
+  }
+
+  > .container .content {
+    margin-top: 4rem;
+    color: var(--gray-4);
+
+    p {
+      font-size: var(--font-size-base);
+    }
+    p + p {
+      margin-top: 1rem;
+    }
+
+    iframe {
+      @include media("xs") {
+        width: 100%;
+      }
+    }
+  }
+
+  @import "./components/relateds";
+}

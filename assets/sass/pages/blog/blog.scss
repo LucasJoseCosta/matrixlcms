@@ -1,0 +1,23 @@
+@import "../../base/mixins";
+
+.blog {
+  padding-top: 6rem;
+
+  @import "./components/breadcrumbs";
+  @import "./components/categories";
+
+  > .list-posts {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem 1rem;
+
+    @include media("md") {
+      gap: 4rem 2rem;
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    @import "./components/post_block";
+  }
+
+  @import "./components/pagination";
+}

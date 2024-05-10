@@ -1,0 +1,38 @@
+.related-posts {
+  padding-bottom: 4rem;
+
+  @include media("md") { padding-top: 4rem }
+
+  > .title {
+    text-align: center;
+  }
+
+  > .posts {
+    padding-top: 2rem;
+    position: relative;
+
+    @import "./post_block";
+  }
+
+  > .posts .swiper {
+    padding-bottom: 4rem;
+  }
+
+  // Configura botões de navegação e paginação
+  .swiper-button-next,
+  .swiper-button-prev {
+    bottom: 0;
+    top: auto;
+    height: 2rem;
+  }
+
+  .swiper-pagination {
+    bottom: 0;
+    height: 2rem;
+  }
+
+  .swiper-pagination-bullet-active {
+    border-color: var(--primary-color);
+    background-color: var(--primary-color);
+  }
+}

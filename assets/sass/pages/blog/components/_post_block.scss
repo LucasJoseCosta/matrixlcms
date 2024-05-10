@@ -1,0 +1,36 @@
+.post-block {
+  width: 100%;
+
+  &:hover {
+    
+    img {
+      filter: brightness(0.8);
+      transform: scale(1.1);
+    }
+
+    .title {
+      color: var(--secondary-color);
+    }
+
+  }
+
+  .image img {
+    transition: var(--transition)
+  }
+
+  .infos {
+    text-align: justify;
+  }
+
+  .infos .title {
+    font-size: var(--font-size-big);
+    transition: var(--transition);
+    margin-top: 1rem;
+  }
+
+  .infos .description {
+    font-size: var(--font-size-small);
+    margin-bottom: 0;
+  }
+
+}

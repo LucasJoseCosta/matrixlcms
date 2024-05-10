@@ -1,0 +1,45 @@
+{% assign html_related_posts = '' %}
+
+{% if related_posts != blank %}
+
+  {% comment %} Carrega somente os posts com o mesmo conteúdo inserido no campo 'relateds' {% endcomment %}
+  {% assign filter = '{ "relateds": "' | append: related_posts | append: '", "publish": true }' | from_json %}
+
+  {% load_media from:'cockpit' collection:'posts' api_key: api_key filter: filter limit: 8 %}
+
+  {% for post in loaded_posts %}
+    {% if post._id != params_id %}
+
+      {% capture html_related_posts %}
+        {{ html_related_posts }}
+
+        <div class="swiper-slide">
+          {% render "media/components/post_block", post: post %}
+        </div>
+
+      {% endcapture %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% comment %} ===== {% endcomment %}
+{% if html_related_posts != blank %}
+<section class="related-posts container section" data-related-posts >
+
+  <h2 class="title">Leia também</h2>
+
+  <div class="posts">
+    <div class="swiper">
+
+      <div class="swiper-wrapper">
+        {{ html_related_posts }}
+      </div>
+
+      <button type="button" class="swiper-button-prev" aria-label="Post anterior"></button>
+      <button type="button" class="swiper-button-next" aria-label="Próximo post"></button>
+      <div class="swiper-pagination"></div>
+    </div>
+  </div>
+
+</section>
+{% endif %}
