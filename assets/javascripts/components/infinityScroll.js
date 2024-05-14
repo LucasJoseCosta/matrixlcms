@@ -1,4 +1,5 @@
 // Insira esse arquivo em javascripts/components
+import ProductPurchase from '../components/productPurchase';
 
 const InfinityScroll = {
   params: window._pagination,
@@ -45,7 +46,7 @@ const InfinityScroll = {
 
     // Busca por scripts para compra rápida
     const scripts = doc.querySelectorAll('[data-variants-script]');
-    scripts.length > 0 && scripts.forEach(script => this.setScript(script));
+    scripts.length > 0 && scripts.forEach((script) => this.setScript(script));
 
     return doc.querySelectorAll('.product-block, .post-block');
   },
@@ -66,13 +67,13 @@ const InfinityScroll = {
 
       const newElements = await this.loadElements();
 
-      newElements.forEach(element => elementWrapper.appendChild(element));
+      newElements.forEach((element) => elementWrapper.appendChild(element));
 
       this.setCurrentPage(currentPage + 1);
 
       if (document.querySelector('.product-block')) {
-        window.ProductPurchase.init(true);
-        this.updatePrice(currentPage + 1)
+        ProductPurchase.init(true);
+        this.updatePrice(currentPage + 1);
       }
 
       window.lazyLoadInstance && window.lazyLoadInstance.update();
@@ -83,18 +84,16 @@ const InfinityScroll = {
   },
 
   updateBlogPagination: function () {
-    let infoToReplace = "blog?";
+    let infoToReplace = 'blog?';
 
-    if (window.location.href.includes("categories=")) {
+    if (window.location.href.includes('categories=')) {
       const categoryParams = window.location.href.split('blog?')[1];
       infoToReplace = `blog?${categoryParams}&`;
     }
 
-    this.params = JSON.parse(JSON.stringify(this.params)
-      .replaceAll('cockpit?', infoToReplace)
-      .replaceAll('cockpit', 'blog')
+    this.params = JSON.parse(
+      JSON.stringify(this.params).replaceAll('cockpit?', infoToReplace).replaceAll('cockpit', 'blog')
     );
-
   },
 
   init: function () {
@@ -102,12 +101,17 @@ const InfinityScroll = {
     const button = this.button;
 
     if (typeof params != 'undefined') {
-
       //Atualiza URLs da paginação do blog
-      window.location.href.includes("m/blog") && this.updateBlogPagination();
+      window.location.href.includes('m/blog') && this.updateBlogPagination();
 
       if (button != null) {
-        button.addEventListener('click', () => { this.getNextPage() }, { passive: true });
+        button.addEventListener(
+          'click',
+          () => {
+            this.getNextPage();
+          },
+          { passive: true }
+        );
       }
     }
   },
