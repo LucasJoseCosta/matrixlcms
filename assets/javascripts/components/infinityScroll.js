@@ -1,5 +1,6 @@
 // Insira esse arquivo em javascripts/components
 import ProductPurchase from '../components/productPurchase';
+import LoggedIn from '../common/loggedIn';
 
 const InfinityScroll = {
   params: window._pagination,
@@ -45,14 +46,14 @@ const InfinityScroll = {
     const doc = parser.parseFromString(data, 'text/html');
 
     // Busca por scripts para compra rápida
-    const scripts = doc.querySelectorAll('[data-variants-script]');
+    const scripts = doc.querySelectorAll('[data-product-variants]');
     scripts.length > 0 && scripts.forEach((script) => this.setScript(script));
 
     return doc.querySelectorAll('.product-block, .post-block');
   },
 
   updatePrice: function () {
-    window.Vnda.Component.Price.update();
+    if (window.Vnda.Component.Price) window.Vnda.Component.Price.update();
   },
 
   getNextPage: async function () {
@@ -81,6 +82,8 @@ const InfinityScroll = {
       wrapper.classList.remove('-searching');
       button.classList.remove('-searching');
     }
+
+    LoggedIn.init();
   },
 
   updateBlogPagination: function () {
