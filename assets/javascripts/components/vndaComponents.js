@@ -1,4 +1,4 @@
-import { addAsset } from "./utilities";
+import { addAsset } from './utilities';
 
 // ===============================================================
 // NEWSLETTER POPUP
@@ -8,9 +8,8 @@ export const NewsletterComponent = {
   settings: window.popupNewsletterSettings || false,
   loaded: false,
 
-  setPopupNewsletter: function() {
-
-    const { settings, root } = NewsletterComponent
+  setPopupNewsletter: function () {
+    const { settings, root } = NewsletterComponent;
 
     // Define propriedades do componente
     let maxWidth = settings.maxWidth;
@@ -44,30 +43,30 @@ export const NewsletterComponent = {
 
     // Renderiza o componente e marca como carregado
     componentNewsletterPopup.render(root);
-    NewsletterComponent.loaded = true
+    NewsletterComponent.loaded = true;
   },
 
-  loadPopupNewsletter: function(eventType) {
+  loadPopupNewsletter: function (eventType) {
     if (!NewsletterComponent.loaded) {
       const { settings } = NewsletterComponent;
-      addAsset(settings.script, NewsletterComponent.setPopupNewsletter)
-      addAsset(settings.styles)
+      addAsset(settings.script, NewsletterComponent.setPopupNewsletter);
+      addAsset(settings.styles);
       // remove listener após setar assets
-      window.removeEventListener(eventType, NewsletterComponent.loadPopupNewsletter)
+      window.removeEventListener(eventType, NewsletterComponent.loadPopupNewsletter);
     }
   },
 
-  init: function() {
+  init: function () {
     const { root, settings } = this;
 
     if (!root || !settings) return;
 
-    const eventType = (window.innerWidth <= 1024) ? 'scroll' : 'mousemove'
+    const eventType = window.innerWidth <= 1024 ? 'scroll' : 'mousemove';
     window.addEventListener(eventType, () => {
-      NewsletterComponent.loadPopupNewsletter(eventType)
-    })
-  }
-}
+      NewsletterComponent.loadPopupNewsletter(eventType);
+    });
+  },
+};
 // ===============================================================
 // FILTROS
 // ===============================================================
@@ -78,102 +77,99 @@ export const FilterComponent = {
   showPriceSlider: false,
   instance: false,
 
-  setTagTypes: function() {
+  setTagTypes: function () {
     const { settings } = FilterComponent;
     const tags = [];
 
     if (settings.aggregations) {
-      const aggregations = settings.aggregations
+      const aggregations = settings.aggregations;
 
       // Filtro de categoria
-      if (aggregations.types.categoria) tags.push({
-        title: 'Categoria',
-        type: 'categoria',
-        style: 'list',
-        options: aggregations.types.categoria
-      })
+      if (aggregations.types.categoria)
+        tags.push({
+          title: 'Categoria',
+          type: 'categoria',
+          style: 'list',
+          options: aggregations.types.categoria,
+        });
     }
 
-    return tags
+    return tags;
   },
 
-  setPropeties: function() {
+  setPropeties: function () {
     const { settings } = FilterComponent;
     const properties = [];
 
     if (settings.aggregations) {
-      const aggregations = settings.aggregations
+      const aggregations = settings.aggregations;
 
       // Filtros Atributo 1
-      if (aggregations.properties.property1.length > 0) properties.push({
-        title: 'Cor',
-        property: 'property1',
-        style: 'colors',
-        colorsProps: {
-          showTitle: true,
-          showColor: true,
-        },
-        options: aggregations.properties.property1,
-      })
+      if (aggregations.properties.property1.length > 0)
+        properties.push({
+          title: 'Marca',
+          property: 'property1',
+          style: 'list',
+          colorsProps: {
+            showTitle: true,
+            showColor: true,
+          },
+          options: aggregations.properties.property1,
+        });
 
       // Filtros Atributo 2
-      if (aggregations.properties.property2.length > 0) properties.push({
-        title: 'Tamanho',
-        property: 'property2',
-        style: 'list',
-        options: aggregations.properties.property2,
-      });
+      if (aggregations.properties.property2.length > 0)
+        properties.push({
+          title: 'Cor',
+          property: 'property2',
+          style: 'colors',
+          options: aggregations.properties.property2,
+        });
 
       // Filtros Atributo 3
-      if (aggregations.properties.property3.length > 0) properties.push({
-        title: 'Fragrância',
-        property: 'property3',
-        style: 'list',
-        options: aggregations.properties.property3,
-      });
-
+      if (aggregations.properties.property3.length > 0)
+        properties.push({
+          title: 'Tamanho',
+          property: 'property3',
+          style: 'list',
+          options: aggregations.properties.property3,
+        });
     }
 
-    return properties
+    return properties;
   },
 
-  setPricesRanges: function() {
-    const { settings, showPriceSlider } = FilterComponent
+  setPricesRanges: function () {
+    const { settings, showPriceSlider } = FilterComponent;
     let priceSettings = {
       price: false,
-      priceProps: false
-    }
+      priceProps: false,
+    };
 
     // Exibe o slider de preço. Caso tenha faixas de preço,
     // preferência fica para as faixas (abaixo)
     if (showPriceSlider) {
-      priceSettings.price = [
-        settings.aggregations.min_price,
-        settings.aggregations.max_price
-      ]
+      priceSettings.price = [settings.aggregations.min_price, settings.aggregations.max_price];
     }
 
     // Exibe as opções de faixa de preço
     if (settings.prices_range.length > 0) {
       priceSettings.priceProps = {
         mode: 'options',
-        options: settings.prices_range
-      }
-      priceSettings.price = [
-        settings.aggregations.min_price,
-        settings.aggregations.max_price
-      ]
+        options: settings.prices_range,
+      };
+      priceSettings.price = [settings.aggregations.min_price, settings.aggregations.max_price];
     }
 
-    return priceSettings
+    return priceSettings;
   },
 
-  setFilters: function() {
+  setFilters: function () {
     const { root } = FilterComponent;
-    const tags = FilterComponent.setTagTypes()
-    const properties = FilterComponent.setPropeties()
-    const priceSettings = FilterComponent.setPricesRanges()
-    const mode = (window.innerWidth <= 1024) ? 'drawer' : 'vertical'
+    const tags = FilterComponent.setTagTypes();
+    const properties = FilterComponent.setPropeties();
+    const priceSettings = FilterComponent.setPricesRanges();
+    const mode = window.innerWidth <= 1024 ? 'drawer' : 'vertical';
 
     const componentFilters = new Vnda.Component.ProductsFilter({
       mode,
@@ -183,53 +179,52 @@ export const FilterComponent = {
       tags,
       properties,
       price: priceSettings.price,
-      priceProps: priceSettings.priceProps
+      priceProps: priceSettings.priceProps,
     });
 
     // Renderiza o componente
     componentFilters.render(root);
-    FilterComponent.instance = componentFilters
-    root.dispatchEvent(new Event('vnda:filter-component-loaded'))
+    FilterComponent.instance = componentFilters;
+    root.dispatchEvent(new Event('vnda:filter-component-loaded'));
   },
 
-  loadFilters: function() {
+  loadFilters: function () {
     const { settings } = FilterComponent;
     if (!settings) return;
-    addAsset(settings.script, FilterComponent.setFilters)
-    addAsset(settings.styles)
+    addAsset(settings.script, FilterComponent.setFilters);
+    addAsset(settings.styles);
   },
 
-  show: function() {
+  show: function () {
     const { root } = FilterComponent;
 
     if (!FilterComponent.instance) {
-      FilterComponent.loadFilters()
+      FilterComponent.loadFilters();
       root.addEventListener('vnda:filter-component-loaded', () => {
-        FilterComponent.instance.toggle()
-      })
+        FilterComponent.instance.toggle();
+      });
     } else {
-      FilterComponent.instance.toggle()
+      FilterComponent.instance.toggle();
     }
   },
 
-  init: function() {
+  init: function () {
+    const { root, mobileButton } = FilterComponent;
 
-    const { root, mobileButton } = FilterComponent
-
-    if (!root) return
+    if (!root) return;
 
     // mobile: monta ao clicar no botão
     // desktop: monta ao carregar a página
     if (window.innerWidth <= 1024) {
-      if (mobileButton) mobileButton.addEventListener('click', () => {
-        FilterComponent.show()
-      })
-
+      if (mobileButton)
+        mobileButton.addEventListener('click', () => {
+          FilterComponent.show();
+        });
     } else {
-      FilterComponent.loadFilters()
+      FilterComponent.loadFilters();
     }
-  }
-}
+  },
+};
 
 // ===============================================================
 // LOGIN
@@ -277,27 +272,28 @@ export const PriceComponent = {
   script: window.priceComponent || false,
   loaded: false,
 
-  init: function() {
-
+  init: function () {
     if (!PriceComponent.script) return;
 
     const productContainers = document.querySelectorAll('[data-product-box]');
 
     if (productContainers.length === 0) return;
 
-    const observer = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting) {
-        if (!PriceComponent.loaded) {
-          addAsset(PriceComponent.script)
-          PriceComponent.loaded = true
-        }        
-        observer.disconnect()
-      }
-    }, { threshold: 0.1 });
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          if (!PriceComponent.loaded) {
+            addAsset(PriceComponent.script);
+            PriceComponent.loaded = true;
+          }
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
 
-    productContainers.forEach(product => {
-      observer.observe(product)
-    })
-  }
-
-}
+    productContainers.forEach((product) => {
+      observer.observe(product);
+    });
+  },
+};
